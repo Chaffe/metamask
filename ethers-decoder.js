@@ -1,5 +1,5 @@
-const { ethers } = require('ethers');
-const { getCryptoExchangeRate } = require('./api');
+import { ethers } from "ethers";
+import { getCryptoExchangeRate } from "./api/index.js";
 
 const ETH_CURRENCY = 'ETH';
 const EXCHANGE_OPERATIONS = {
@@ -15,13 +15,13 @@ const convertHexToEth = (transactionAmountHash) => {
     return +ethers.formatEther(parseValue.toString());
 };
 
-const decodeTransactionCustomData = ({ input }) => {
+export const decodeTransactionCustomData = ({ input }) => {
     const transactionInputJSON = ethers.toUtf8String(input);
 
     return JSON.parse(transactionInputJSON);
 }
 
-const getUSDAmount = async (transactionData) => {
+export const getUSDAmount = async (transactionData) => {
     const USD_VARIANCE = 100;
     const { data: { amount } } = await getCryptoExchangeRate({
         cryptoCurrency: ETH_CURRENCY,
@@ -33,5 +33,3 @@ const getUSDAmount = async (transactionData) => {
 
     return Math.floor(+amount * ethAmount * USD_VARIANCE);
 }
-
-module.exports = { convertHexToEth, decodeTransactionCustomData, getUSDAmount };

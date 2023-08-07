@@ -1,5 +1,6 @@
 {
   "name": "sdk-nodejs-example",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
